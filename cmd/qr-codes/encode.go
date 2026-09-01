@@ -1,7 +1,3 @@
-// Command encode generates QR code images for different payload types.
-//
-//	encode url [flags] <url>
-//	encode wifi -ssid <ssid> [flags]
 package main
 
 import (
@@ -13,48 +9,44 @@ import (
 	"qr-codes/internal/payload"
 )
 
-func main() {
-	if len(os.Args) < 2 {
-		usage()
+func runEncode(args []string) error {
+	if len(args) < 1 {
+		encodeUsage()
 		os.Exit(2)
 	}
 
-	var err error
-	switch os.Args[1] {
+	switch args[0] {
 	case "url":
-		err = runURL(os.Args[2:])
+		return runEncodeURL(args[1:])
 	case "wifi":
-		err = runWiFi(os.Args[2:])
+		return runEncodeWiFi(args[1:])
 	case "help", "-h", "-help", "--help":
-		usage()
-		return
+		encodeUsage()
+		return nil
 	default:
-		fmt.Fprintf(os.Stderr, "unknown type %q\n\n", os.Args[1])
-		usage()
+		fmt.Fprintf(os.Stderr, "unknown type %q\n\n", args[0])
+		encodeUsage()
 		os.Exit(2)
-	}
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
+		return nil
 	}
 }
 
-func usage() {
-	fmt.Fprint(os.Stderr, `usage: encode <type> [flags]
+func encodeUsage() {
+	fmt.Fprint(os.Stderr, `usage: qr-codes encode <type> [flags]
 
 types:
-  url   encode a URL:                      encode url [flags] <url>
-  wifi  encode WiFi network credentials:   encode wifi -ssid <ssid> [flags]
+  url   encode a URL:                      qr-codes encode url [flags] <url>
+  wifi  encode WiFi network credentials:   qr-codes encode wifi -ssid <ssid> [flags]
 
-run "encode <type> -h" for the flags of each type.
+run "qr-codes encode <type> -h" for the flags of each type.
 `)
 }
 
-func runURL(args []string) error {
-	fs := flag.NewFlagSet("encode url", flag.ExitOnError)
+func runEncodeURL(args []string) error {
+	fs := flag.NewFlagSet("qr-codes encode url", flag.ExitOnError)
 	opts, width := imageFlags(fs, "./qr-url.png")
 	fs.Usage = func() {
-		fmt.Fprintln(os.Stderr, "usage: encode url [flags] <url>")
+		fmt.Fprintln(os.Stderr, "usage: qr-codes encode url [flags] <url>")
 		fs.PrintDefaults()
 	}
 	fs.Parse(args)
@@ -70,8 +62,8 @@ func runURL(args []string) error {
 	return encode(content, opts, *width)
 }
 
-func runWiFi(args []string) error {
-	fs := flag.NewFlagSet("encode wifi", flag.ExitOnError)
+func runEncodeWiFi(args []string) error {
+	fs := flag.NewFlagSet("qr-codes encode wifi", flag.ExitOnError)
 	opts, width := imageFlags(fs, "./qr-wifi.png")
 	ssid := fs.String("ssid", "", "network name (required)")
 	password := fs.String("password", "", "network password")
