@@ -3,12 +3,26 @@
 QR code tooling in Go: a CLI for encoding/decoding QR codes and a
 client-side webapp that generates printable Wi-Fi signs.
 
-## Wi-Fi Sign Generator (wifi-signs.grocky.net)
+## Wi-Fi Sign Generator — [wifi-signs.grocky.net](https://wifi-signs.grocky.net)
 
-A static webapp that renders a printable 8.5×11in Wi-Fi sign with a live
-preview. All rendering runs in the browser via Go compiled to WebAssembly —
-**passwords never leave the device**. Design details in
-[docs/TDD-wifi-signs.md](docs/TDD-wifi-signs.md).
+**Give your guests Wi-Fi without spelling out the password.** Type your
+network details, watch the sign update live, and download a print-ready
+8.5×11in poster — guests just point their camera and they're on.
+
+[![The Wi-Fi Sign Generator: live-preview editor and a finished crimson sign](docs/images/wifi-signs-site.png)](https://wifi-signs.grocky.net)
+
+- **Private by design** — the whole app runs in your browser (Go compiled
+  to WebAssembly). Your password never leaves the device; there's no
+  backend to send it to.
+- **Make it yours** — pick accent and background colors, upload your own
+  logo, rewrite every line of text, and choose the ornament flourish
+  (card suits, a custom tagline, or none).
+- **Print-ready output** — crisp vector SVG, 300dpi PNG, or US Letter
+  PDF. The QR code is generated as vector paths, so it stays sharp at
+  any size.
+- **Free and open source** — no tracking, no uploads, no account.
+
+Design details in [docs/TDD-wifi-signs.md](docs/TDD-wifi-signs.md).
 
 ```sh
 make serve       # build WASM and serve web/ on :8080
