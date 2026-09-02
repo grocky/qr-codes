@@ -77,6 +77,7 @@
         <button type="button" id="dl-png" disabled>PNG</button>
         <button type="button" id="dl-pdf" disabled>PDF</button>
         <button type="button" id="print" disabled>Print</button>
+        <span class="field-error" id="export-error"></span>
       </fieldset>
     </form>
 
@@ -92,6 +93,8 @@
   </footer>
 
   <script src="wasm_exec.js"></script>
+  <script src="vendor/pdf-lib.min.js"></script>
+  <script src="export.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

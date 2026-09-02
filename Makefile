@@ -1,6 +1,6 @@
 VERSION := $(shell git describe --always --dirty 2>/dev/null || echo dev)
 
-.PHONY: test build build-wasm serve deploy clean
+.PHONY: test e2e build build-wasm serve deploy clean
 
 test:
 	go test ./...
@@ -15,6 +15,9 @@ build-wasm:
 serve: build-wasm
 	@echo "serving web/ on http://localhost:8080"
 	@cd web && python3 -m http.server 8080
+
+e2e: build-wasm
+	cd web/e2e && npx playwright test
 
 deploy: test build-wasm
 	wrangler pages deploy web --project-name wifi-signs
