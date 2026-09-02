@@ -1,0 +1,132 @@
+:root {
+  --felt: #1b6f4c;
+  --felt-dark: #0a3826;
+  --cream: #e8e2d4;
+  --ink: #1c1c1c;
+  --error: #b3261e;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: #f4f1ea;
+}
+
+header {
+  background: radial-gradient(circle at 50% 20%, var(--felt), var(--felt-dark));
+  color: #fff;
+  padding: 1.2rem 1.5rem;
+}
+
+header h1 { margin: 0 0 0.2rem; font-size: 1.5rem; letter-spacing: 0.04em; }
+.privacy { margin: 0; color: var(--cream); font-size: 0.9rem; }
+
+main {
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+  main { grid-template-columns: 1fr; }
+}
+
+fieldset {
+  border: 1px solid #d8d2c4;
+  border-radius: 8px;
+  margin: 0 0 1rem;
+  padding: 0.8rem 1rem;
+  background: #fff;
+}
+
+legend { font-weight: 600; padding: 0 0.4rem; }
+
+label { display: block; margin: 0.5rem 0; font-size: 0.9rem; }
+label.check { display: flex; align-items: center; gap: 0.4rem; }
+
+input[type="text"], select {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.45rem 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #c9c2b2;
+  border-radius: 5px;
+}
+
+input[type="color"] {
+  margin-top: 0.25rem;
+  inline-size: 3.5rem;
+  block-size: 2rem;
+  padding: 0;
+  border: 1px solid #c9c2b2;
+  border-radius: 5px;
+}
+
+.field-error {
+  display: block;
+  color: var(--error);
+  font-size: 0.8rem;
+  min-height: 1em;
+}
+
+#downloads button {
+  font-size: 1rem;
+  padding: 0.5rem 1.1rem;
+  margin-right: 0.4rem;
+  border: 1px solid var(--felt);
+  border-radius: 6px;
+  background: var(--felt);
+  color: #fff;
+  cursor: pointer;
+}
+
+#downloads button:disabled {
+  background: #b5b0a4;
+  border-color: #b5b0a4;
+  cursor: not-allowed;
+}
+
+#preview-pane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#preview svg {
+  width: 100%;
+  height: auto;
+  max-width: 560px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+
+#loading, .hint { color: #6b6552; padding: 2rem; }
+
+footer {
+  text-align: center;
+  color: #6b6552;
+  font-size: 0.8rem;
+  padding: 1rem;
+}
+
+/* Print only the sign, at page size. */
+@media print {
+  header, footer, #sign-form, #loading, .hint { display: none !important; }
+  body { background: #fff; }
+  main { display: block; padding: 0; margin: 0; max-width: none; }
+  #preview svg {
+    max-width: none;
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  @page { margin: 0; size: letter portrait; }
+}

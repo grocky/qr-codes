@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wi-Fi Sign Generator</title>
+  <meta name="description" content="Create a printable Wi-Fi QR code sign. Everything runs in your browser — your password never leaves your device.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Wi-Fi Sign Generator</h1>
+    <p class="privacy">Runs entirely in your browser — your password never leaves this device.</p>
+  </header>
+
+  <main>
+    <form id="sign-form" autocomplete="off">
+      <fieldset>
+        <legend>Network</legend>
+        <label>Network name (SSID)
+          <input type="text" id="ssid" maxlength="32" required>
+          <span class="field-error" data-field="ssid"></span>
+        </label>
+        <label>Password
+          <input type="text" id="password" maxlength="63">
+          <span class="field-error" data-field="password"></span>
+        </label>
+        <label>Security
+          <select id="auth">
+            <option value="WPA" selected>WPA / WPA2 / WPA3</option>
+            <option value="WEP">WEP</option>
+            <option value="nopass">Open (no password)</option>
+          </select>
+          <span class="field-error" data-field="auth"></span>
+        </label>
+        <label class="check"><input type="checkbox" id="hidden"> Hidden network</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Appearance</legend>
+        <label>Accent color
+          <input type="color" id="accentColor" value="#e8e2d4">
+          <span class="field-error" data-field="accentColor"></span>
+        </label>
+        <label>Background color
+          <input type="color" id="backgroundColor" value="#1b6f4c">
+          <span class="field-error" data-field="backgroundColor"></span>
+        </label>
+        <label>Logo (PNG, JPEG, or SVG; max 2 MiB)
+          <input type="file" id="logo" accept="image/png,image/jpeg,image/svg+xml">
+          <button type="button" id="logo-clear" hidden>Remove logo</button>
+          <span class="field-error" data-field="logoDataUri"></span>
+        </label>
+        <label class="check"><input type="checkbox" id="showSuits" checked> Show card-suit ornaments</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Text</legend>
+        <label>Headline
+          <input type="text" id="headline" maxlength="24" placeholder="WI-FI">
+          <span class="field-error" data-field="headline"></span>
+        </label>
+        <label>Subtitle
+          <input type="text" id="subtitle" maxlength="40" placeholder="SCAN TO CONNECT">
+          <span class="field-error" data-field="subtitle"></span>
+        </label>
+        <label>Footer (leave empty to hide)
+          <input type="text" id="footerText" maxlength="120"
+                 value="Point your camera at the code — no typing required.">
+          <span class="field-error" data-field="footerText"></span>
+        </label>
+      </fieldset>
+
+      <fieldset id="downloads">
+        <legend>Download</legend>
+        <button type="button" id="dl-svg" disabled>SVG</button>
+        <button type="button" id="dl-png" disabled>PNG</button>
+        <button type="button" id="dl-pdf" disabled>PDF</button>
+        <button type="button" id="print" disabled>Print</button>
+      </fieldset>
+    </form>
+
+    <section id="preview-pane" aria-live="polite">
+      <div id="loading">Loading generator…</div>
+      <div id="preview" hidden></div>
+      <p class="hint" id="preview-hint" hidden>Enter your network name to see the sign.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Open source — no tracking, no uploads. <span id="version"></span></p>
+  </footer>
+
+  <script src="wasm_exec.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
