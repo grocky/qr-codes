@@ -17,7 +17,8 @@ function collectParams() {
     accentColor: $('accentColor').value,
     backgroundColor: $('backgroundColor').value,
     logoDataUri: logoDataURI,
-    showSuits: $('showSuits').checked,
+    ornament: $('ornament').value,
+    tagline: $('tagline').value,
     headline: $('headline').value,
     subtitle: $('subtitle').value,
     footerText: $('footerText').value,
@@ -91,6 +92,9 @@ function wireForm() {
   document.querySelectorAll('#sign-form input, #sign-form select').forEach((el) => {
     if (el.type === 'file') return;
     el.addEventListener('input', refreshSoon);
+  });
+  $('ornament').addEventListener('input', () => {
+    $('tagline-label').hidden = $('ornament').value !== 'tagline';
   });
   $('logo').addEventListener('change', (e) => readLogo(e.target.files[0]));
   $('logo-clear').addEventListener('click', () => {

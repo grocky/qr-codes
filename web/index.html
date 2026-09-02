@@ -55,7 +55,18 @@
           <button type="button" id="logo-clear" hidden>Remove logo</button>
           <span class="field-error" data-field="logoDataUri"></span>
         </label>
-        <label class="check"><input type="checkbox" id="showSuits" checked> Show card-suit ornaments</label>
+        <label>Ornament line (above the footer)
+          <select id="ornament">
+            <option value="suits" selected>Card suits ♠ ♥ ♦ ♣</option>
+            <option value="tagline">Custom tagline</option>
+            <option value="none">None</option>
+          </select>
+          <span class="field-error" data-field="ornament"></span>
+        </label>
+        <label id="tagline-label" hidden>Tagline
+          <input type="text" id="tagline" maxlength="60" placeholder="Good luck, have fun">
+          <span class="field-error" data-field="tagline"></span>
+        </label>
       </fieldset>
 
       <fieldset>

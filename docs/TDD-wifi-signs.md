@@ -15,7 +15,7 @@ Decisions already made:
 - **Downloads:** SVG (vector), PNG (300dpi), PDF (US Letter).
 - **Logo:** user uploads PNG/JPEG/SVG, or omits it.
 - **No visible credentials on the sign** — QR-only, preserving the current design.
-- **Bottom area:** footer sentence is free text; the suit ornament row is show/hide only.
+- **Bottom area:** footer sentence is free text; the ornament line above it holds either an ornament set (currently `suits`; more sets planned), a custom tagline, or nothing. (Superseded the original show/hide-only toggle on 2026-09-02.)
 
 ## 2. Goals
 
@@ -213,7 +213,7 @@ Template modifications to derive `template.svg.tmpl` from `wifi-sign.svg`:
 3. Felt gradient stops → `{{.FeltInner}}` / `{{.FeltOuter}}` (outer derived in Go as RGB×0.5, matching the original ratio; the form exposes one background color picker).
 4. Logo `<image>` wrapped in `{{if .LogoDataURI}}`, href → `{{.LogoDataURI}}`. `preserveAspectRatio="xMidYMid meet"` already letterboxes non-square logos in the 300×300 box.
 5. Text elements → `{{.Headline}}` / `{{.Subtitle}}` / `{{.FooterText}}` with computed `font-size`; footer wrapped in `{{if .FooterText}}`.
-6. Suit-row defs + `<use>` wrapped in `{{if .ShowSuits}}`.
+6. Suit-row defs + `<use>` gated on `{{if eq .Ornament "suits"}}`; the ornament slot alternatively renders a tagline `<text>`. The line sits at y=1018 (footer at y=1052), padded clear of the QR card's drop shadow.
 7. QR `<image>` replaced by the vector `<g>` from §6.1.
 
 **Text overflow mitigation** — deterministic font-size shrink (not bare `textLength`, which also stretches short strings): estimated width = `runes × fontSize × k + (runes−1) × letterSpacing` (k ≈ 0.62 regular / 0.72 bold for the Helvetica stack); if it exceeds the box (headline 700, subtitle 700, footer 780 units), shrink proportionally with floors (headline ≥40, others ≥12); emit `textLength`/`lengthAdjust="spacingAndGlyphs"` only on lines that hit the floor. Form inputs also carry `maxlength`.
@@ -233,7 +233,11 @@ type Params struct {
     AccentColor     string `json:"accentColor"`     // ^#[0-9a-fA-F]{6}$; default "#e8e2d4"
     BackgroundColor string `json:"backgroundColor"` // same regex; default "#1b6f4c"
     LogoDataURI     string `json:"logoDataUri"`     // "" = no logo; ^data:image/(png|jpeg|svg\+xml);base64,; <=2MiB decoded
-    ShowSuits       bool   `json:"showSuits"`       // default true (JS prefills)
+
+    // Ornament line between the QR card and footer: an ornament set name
+    // ("suits" today; the set list is extensible), "tagline", or "none".
+    Ornament string `json:"ornament"` // default "suits"
+    Tagline  string `json:"tagline"`  // required non-empty when Ornament=="tagline"; <=60 runes
 
     // Text — the form always submits fully-resolved values; FooterText:"" hides the line
     Headline   string `json:"headline"`   // default "WI-FI"; <=24 runes

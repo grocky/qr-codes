@@ -122,6 +122,30 @@ func TestValidateTextLimits(t *testing.T) {
 	}
 }
 
+func TestValidateOrnament(t *testing.T) {
+	tests := []struct {
+		name       string
+		mutate     func(*Params)
+		wantFields []string
+	}{
+		{"defaults to suits", func(p *Params) {}, nil},
+		{"suits ok", func(p *Params) { p.Ornament = "suits" }, nil},
+		{"none ok", func(p *Params) { p.Ornament = "none" }, nil},
+		{"unknown ornament", func(p *Params) { p.Ornament = "hearts" }, []string{"ornament"}},
+		{"tagline requires text", func(p *Params) { p.Ornament = "tagline" }, []string{"tagline"}},
+		{"tagline with text ok", func(p *Params) { p.Ornament = "tagline"; p.Tagline = "House rules apply" }, nil},
+		{"tagline over 60 runes", func(p *Params) { p.Ornament = "tagline"; p.Tagline = strings.Repeat("x", 61) }, []string{"tagline"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			p := validParams()
+			tt.mutate(&p)
+			p.ApplyDefaults()
+			assertFields(t, p.Validate(), tt.wantFields...)
+		})
+	}
+}
+
 func TestValidateAggregatesAllErrors(t *testing.T) {
 	p := Params{} // no ssid, no password, no auth
 	p.ApplyDefaults()

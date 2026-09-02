@@ -4,6 +4,8 @@ package sign
 import (
 	"encoding/base64"
 	"regexp"
+	"slices"
+	"strings"
 	"unicode/utf8"
 
 	"qr-codes/internal/payload"
@@ -21,7 +23,11 @@ type Params struct {
 	AccentColor     string `json:"accentColor"`
 	BackgroundColor string `json:"backgroundColor"`
 	LogoDataURI     string `json:"logoDataUri"` // "" = no logo
-	ShowSuits       bool   `json:"showSuits"`
+
+	// Ornament is what fills the line between the QR card and the footer:
+	// an ornament set name ("suits"), "tagline" (renders Tagline), or "none".
+	Ornament string `json:"ornament"`
+	Tagline  string `json:"tagline"`
 
 	// Text; FooterText == "" hides the footer line.
 	Headline   string `json:"headline"`
@@ -47,7 +53,14 @@ const (
 	maxHeadlineRunes = 24
 	maxSubtitleRunes = 40
 	maxFooterRunes   = 120
+	maxTaglineRunes  = 60
 )
+
+// ornamentSets are the available ornament designs; more sets will be added.
+var ornamentSets = []string{"suits"}
+
+// ornamentChoices are all valid Ornament values.
+var ornamentChoices = append([]string{"tagline", "none"}, ornamentSets...)
 
 var (
 	hexColorRe    = regexp.MustCompile(`^#[0-9a-fA-F]{6}$`)
@@ -68,6 +81,9 @@ func (p *Params) ApplyDefaults() {
 	}
 	if p.Subtitle == "" {
 		p.Subtitle = defaultSubtitle
+	}
+	if p.Ornament == "" {
+		p.Ornament = "suits"
 	}
 }
 
@@ -109,6 +125,17 @@ func (p *Params) Validate() []FieldError {
 		} else if decoded := base64.StdEncoding.DecodedLen(len(p.LogoDataURI) - len(m[0])); decoded > maxLogoBytes {
 			fail("logoDataUri", "logo must be at most 2 MiB")
 		}
+	}
+
+	switch {
+	case p.Ornament == "tagline":
+		if p.Tagline == "" {
+			fail("tagline", "tagline text is required when the ornament is a tagline")
+		} else if utf8.RuneCountInString(p.Tagline) > maxTaglineRunes {
+			fail("tagline", "tagline must be at most 60 characters")
+		}
+	case !slices.Contains(ornamentChoices, p.Ornament):
+		fail("ornament", "ornament must be one of: "+strings.Join(ornamentChoices, ", "))
 	}
 
 	if utf8.RuneCountInString(p.Headline) > maxHeadlineRunes {

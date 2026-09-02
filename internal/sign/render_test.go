@@ -108,19 +108,31 @@ func TestRenderCustomization(t *testing.T) {
 			contains: []string{`<image id="logo"`, "data:image/png;base64,AAAA"},
 		},
 		{
-			name:        "suits hidden",
-			params:      `{` + base + `,"showSuits":false,"footerText":"hi"}`,
+			name:        "ornament none",
+			params:      `{` + base + `,"ornament":"none","footerText":"hi"}`,
+			notContains: []string{"suit-row", `id="ornament-tagline"`},
+		},
+		{
+			name:     "ornament defaults to suits",
+			params:   `{` + base + `}`,
+			contains: []string{`id="suit-row"`, `xlink:href="#suit-row"`},
+		},
+		{
+			name:        "ornament tagline replaces suits",
+			params:      `{` + base + `,"ornament":"tagline","tagline":"House rules apply"}`,
+			contains:    []string{`id="ornament-tagline"`, ">House rules apply</text>"},
 			notContains: []string{"suit-row"},
 		},
 		{
-			name:     "suits shown",
-			params:   `{` + base + `,"showSuits":true}`,
-			contains: []string{`id="suit-row"`, `xlink:href="#suit-row"`},
+			name:     "ornament line is padded away from the QR card",
+			params:   `{` + base + `}`,
+			contains: []string{"translate(425,1018)"},
+			notContains: []string{"translate(425,1006)"},
 		},
 		{
 			name:        "empty footer hides text line",
 			params:      `{` + base + `}`,
-			notContains: []string{`y="1046"`},
+			notContains: []string{`y="1052"`},
 		},
 		{
 			name:        "custom colors flow to accent and derived felt",
@@ -163,8 +175,8 @@ func TestRenderGolden(t *testing.T) {
 		name   string
 		params string
 	}{
-		{"defaults", `{` + base + `,"showSuits":true,"footerText":"Point your camera at the code — no typing required."}`},
-		{"customized", `{` + base + `,"accentColor":"#d4af37","backgroundColor":"#1a1a2e","logoDataUri":"data:image/png;base64,iVBORw0KGgo=","showSuits":false,"headline":"GUEST WI-FI","subtitle":"SCAN TO JOIN","footerText":"Welcome!"}`},
+		{"defaults", `{` + base + `,"footerText":"Point your camera at the code — no typing required."}`},
+		{"customized", `{` + base + `,"accentColor":"#d4af37","backgroundColor":"#1a1a2e","logoDataUri":"data:image/png;base64,iVBORw0KGgo=","ornament":"tagline","tagline":"Good luck, have fun","headline":"GUEST WI-FI","subtitle":"SCAN TO JOIN","footerText":"Welcome!"}`},
 		{"long-text-shrink", `{` + base + `,"headline":"THE EXTREMELY LONG NAME","footerText":"` + strings.Repeat("word ", 23) + `end"}`},
 	}
 	for _, tt := range tests {

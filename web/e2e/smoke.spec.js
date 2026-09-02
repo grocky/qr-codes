@@ -58,9 +58,21 @@ test('customization reaches the preview', async ({ page }) => {
   await page.fill('#ssid', 'net');
   await page.fill('#password', 'password');
   await page.fill('#headline', 'GUEST WI-FI');
-  await page.uncheck('#showSuits');
 
-  const svgHTML = page.locator('#preview');
-  await expect(svgHTML.locator('svg text', { hasText: 'GUEST WI-FI' })).toBeVisible();
-  await expect(svgHTML.locator('#suit-row')).toHaveCount(0);
+  const preview = page.locator('#preview');
+  await expect(preview.locator('svg text', { hasText: 'GUEST WI-FI' })).toBeVisible();
+  await expect(preview.locator('#suit-row')).toHaveCount(1); // default ornament
+
+  // Switching to a tagline reveals the field and replaces the suits.
+  await expect(page.locator('#tagline-label')).toBeHidden();
+  await page.selectOption('#ornament', 'tagline');
+  await expect(page.locator('#tagline-label')).toBeVisible();
+  await expect(page.locator('.field-error[data-field="tagline"]')).not.toBeEmpty();
+  await page.fill('#tagline', 'Good luck, have fun');
+  await expect(preview.locator('#ornament-tagline')).toBeVisible();
+  await expect(preview.locator('#suit-row')).toHaveCount(0);
+
+  await page.selectOption('#ornament', 'none');
+  await expect(preview.locator('#ornament-tagline')).toHaveCount(0);
+  await expect(preview.locator('#suit-row')).toHaveCount(0);
 });

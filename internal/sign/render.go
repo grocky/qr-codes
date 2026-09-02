@@ -70,30 +70,34 @@ func buildResult(paramsJSON []byte) Result {
 	headline := fitText(p.Headline, 94, 4, 0.72, 700, 40)
 	subtitle := fitText(p.Subtitle, 26, 9, 0.62, 700, 12)
 	footer := fitText(p.FooterText, 20, 0.5, 0.62, 780, 12)
+	tagline := fitText(p.Tagline, 24, 2, 0.62, 700, 12)
 
 	data := struct {
-		Accent, FeltInner, FeltOuter           string
-		LogoDataURI                            string
-		ShowSuits                              bool
-		Headline, Subtitle, FooterText         string
-		HeadlineSize, SubtitleSize, FooterSize string
-		HeadlineFit, SubtitleFit, FooterFit    string
-		QRScale, QRPath                        string
+		Accent, FeltInner, FeltOuter                        string
+		LogoDataURI                                         string
+		Ornament                                            string
+		Headline, Subtitle, FooterText, TaglineText         string
+		HeadlineSize, SubtitleSize, FooterSize, TaglineSize string
+		HeadlineFit, SubtitleFit, FooterFit, TaglineFit     string
+		QRScale, QRPath                                     string
 	}{
 		Accent:       p.AccentColor,
 		FeltInner:    p.BackgroundColor,
 		FeltOuter:    darken(p.BackgroundColor),
 		LogoDataURI:  escapeXML(p.LogoDataURI),
-		ShowSuits:    p.ShowSuits,
+		Ornament:     p.Ornament,
 		Headline:     escapeXML(p.Headline),
 		Subtitle:     escapeXML(p.Subtitle),
 		FooterText:   escapeXML(p.FooterText),
+		TaglineText:  escapeXML(p.Tagline),
 		HeadlineSize: headline.size,
 		SubtitleSize: subtitle.size,
 		FooterSize:   footer.size,
+		TaglineSize:  tagline.size,
 		HeadlineFit:  headline.fit,
 		SubtitleFit:  subtitle.fit,
 		FooterFit:    footer.fit,
+		TaglineFit:   tagline.fit,
 		QRScale:      formatNum(qrBoxSize / float64(n)),
 		QRPath:       pathData(bitmap),
 	}

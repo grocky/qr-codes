@@ -13,7 +13,7 @@
     <filter id="cardShadow" x="-25%" y="-25%" width="150%" height="150%">
       <feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#000000" flood-opacity="0.4"/>
     </filter>
-{{if .ShowSuits}}
+{{if eq .Ornament "suits"}}
     <!-- card-suit ornament, drawn once and reused -->
     <g id="suit-row" fill="{{.Accent}}">
       <path transform="translate(-51,0) scale(0.85)"
@@ -58,11 +58,15 @@
   <g transform="translate(253,610) scale({{.QRScale}})" shape-rendering="crispEdges">
     <path fill="#000000" d="{{.QRPath}}"/>
   </g>
-{{if .ShowSuits}}
-  <!-- ========= footer ========= -->
-  <use xlink:href="#suit-row" transform="translate(425,1006)" opacity="0.65"/>
+{{if eq .Ornament "suits"}}
+  <!-- ========= ornament line: padded clear of the QR card's shadow ========= -->
+  <use xlink:href="#suit-row" transform="translate(425,1018)" opacity="0.65"/>
+{{else if eq .Ornament "tagline"}}
+  <text id="ornament-tagline" x="425" y="1025" text-anchor="middle"
+        font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="{{.TaglineSize}}" font-weight="600" letter-spacing="2" fill="{{.Accent}}" fill-opacity="0.85"{{.TaglineFit}}>{{.TaglineText}}</text>
 {{end}}{{if .FooterText}}
-  <text x="425" y="1046" text-anchor="middle"
+  <text x="425" y="1052" text-anchor="middle"
         font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
         font-size="{{.FooterSize}}" letter-spacing="0.5" fill="{{.Accent}}" fill-opacity="0.9"{{.FooterFit}}>{{.FooterText}}</text>
 {{end}}</svg>

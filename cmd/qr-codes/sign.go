@@ -17,14 +17,15 @@ func runSign(args []string) error {
 	out := fs.String("o", "./out/wifi-sign.svg", "output SVG file")
 	logoPath := fs.String("logo", "", "path to a PNG/JPEG/SVG logo image")
 
-	p := sign.Params{ShowSuits: true}
+	p := sign.Params{}
 	fs.StringVar(&p.SSID, "ssid", "", "network name (required)")
 	fs.StringVar(&p.Password, "password", "", "network password")
 	fs.StringVar(&p.Auth, "auth", "WPA", "auth type: WPA, WEP, or nopass")
 	fs.BoolVar(&p.Hidden, "hidden", false, "network is hidden")
 	fs.StringVar(&p.AccentColor, "accent", "", "accent color (#rrggbb)")
 	fs.StringVar(&p.BackgroundColor, "background", "", "background color (#rrggbb)")
-	fs.BoolVar(&p.ShowSuits, "suits", true, "show the card-suit ornament row")
+	fs.StringVar(&p.Ornament, "ornament", "suits", "ornament line above the footer: suits, tagline, or none")
+	fs.StringVar(&p.Tagline, "tagline", "", "tagline text (requires -ornament tagline)")
 	fs.StringVar(&p.Headline, "headline", "", "headline text")
 	fs.StringVar(&p.Subtitle, "subtitle", "", "subtitle text")
 	fs.StringVar(&p.FooterText, "footer", "Point your camera at the code — no typing required.", "footer text (empty hides the line)")
