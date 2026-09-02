@@ -44,7 +44,7 @@ run "qr-codes encode <type> -h" for the flags of each type.
 
 func runEncodeURL(args []string) error {
 	fs := flag.NewFlagSet("qr-codes encode url", flag.ExitOnError)
-	opts, width := imageFlags(fs, "./qr-url.png")
+	opts, width := imageFlags(fs, "./out/qr-url.png")
 	fs.Usage = func() {
 		fmt.Fprintln(os.Stderr, "usage: qr-codes encode url [flags] <url>")
 		fs.PrintDefaults()
@@ -64,7 +64,7 @@ func runEncodeURL(args []string) error {
 
 func runEncodeWiFi(args []string) error {
 	fs := flag.NewFlagSet("qr-codes encode wifi", flag.ExitOnError)
-	opts, width := imageFlags(fs, "./qr-wifi.png")
+	opts, width := imageFlags(fs, "./out/qr-wifi.png")
 	ssid := fs.String("ssid", "", "network name (required)")
 	password := fs.String("password", "", "network password")
 	auth := fs.String("auth", "WPA", "auth type: WPA, WEP, or nopass")

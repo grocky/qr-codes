@@ -45,6 +45,12 @@ func Encode(content string, opts Options) error {
 		imageOptions = append(imageOptions, standard.WithBgTransparent())
 	}
 
+	if dir := filepath.Dir(opts.OutputFile); dir != "." {
+		if err := os.MkdirAll(dir, 0o755); err != nil {
+			return fmt.Errorf("create output directory: %w", err)
+		}
+	}
+
 	writer, err := standard.New(opts.OutputFile, imageOptions...)
 	if err != nil {
 		return fmt.Errorf("create writer: %w", err)
