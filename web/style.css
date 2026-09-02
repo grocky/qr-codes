@@ -1,6 +1,6 @@
 :root {
-  --felt: #1b6f4c;
-  --felt-dark: #0a3826;
+  --brand: #a3132f;
+  --brand-dark: #520a18;
   --cream: #e8e2d4;
   --ink: #1c1c1c;
   --error: #b3261e;
@@ -19,7 +19,7 @@ body {
 }
 
 header {
-  background: radial-gradient(circle at 50% 20%, var(--felt), var(--felt-dark));
+  background: radial-gradient(circle at 50% 20%, var(--brand), var(--brand-dark));
   color: #fff;
   padding: 1.2rem 1.5rem;
 }
@@ -83,9 +83,9 @@ input[type="color"] {
   font-size: 1rem;
   padding: 0.5rem 1.1rem;
   margin-right: 0.4rem;
-  border: 1px solid var(--felt);
+  border: 1px solid var(--brand);
   border-radius: 6px;
-  background: var(--felt);
+  background: var(--brand);
   color: #fff;
   cursor: pointer;
 }
