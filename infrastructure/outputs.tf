@@ -1,6 +1,6 @@
 output "url" {
   description = "Public URL of the site"
-  value       = "https://${var.domain_name}"
+  value       = "https://${local.site_hostname}"
 }
 
 output "pages_url" {

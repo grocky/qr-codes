@@ -19,16 +19,17 @@ make deploy      # wrangler pages deploy web (Cloudflare Pages)
 
 ### Infrastructure
 
-`infrastructure/` manages the Cloudflare Pages project and the
-`wifi-signs.grocky.net` CNAME (written into the Route53 `grocky.net` zone,
-which is owned by the ddns-service repo). State lives in
-`s3://grocky-tfstate/wifi-signs.grocky.net/terraform.tfstate` with S3-native
-locking.
+`infrastructure/` manages the Cloudflare Pages project and the proxied
+`wifi-signs.grocky.net` CNAME in the Cloudflare `grocky.net` zone (DNS
+migrated from Route53 — see the minecraft repo's
+`docs/runbook-cloudflare.md` for the account/zone/token bootstrap). State
+lives in `s3://grocky-tfstate/wifi-signs.grocky.net/terraform.tfstate`
+with S3-native locking (AWS credentials needed for state only).
 
 ```sh
-cp infrastructure/terraform.tfvars.example infrastructure/terraform.tfvars  # set account id
-export CLOUDFLARE_API_TOKEN=...   # needs "Cloudflare Pages: Edit"
-make tf-init tf-plan tf-apply     # AWS credentials required for state + Route53
+cp infrastructure/terraform.tfvars.example infrastructure/terraform.tfvars
+# fill in the API token + account/zone IDs (same IDs as the minecraft repo)
+make tf-init tf-plan tf-apply
 make deploy                       # then publish web/ to the Pages project
 ```
 

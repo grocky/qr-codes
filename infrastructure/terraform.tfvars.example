@@ -1,4 +1,18 @@
-# Copy to terraform.tfvars and fill in. The account ID is not a secret
-# (it appears in dashboard URLs): dash.cloudflare.com -> any zone ->
-# Overview sidebar, or `npx wrangler whoami`.
-cloudflare_account_id = "00000000000000000000000000000000"
+# ─────────────────────────────────────────────────────────────────────────────
+# Example variable values for the wifi-signs infrastructure.
+#
+# Copy to terraform.tfvars and fill in real values. The real terraform.tfvars
+# is gitignored (never commit secrets).
+#
+#   cp terraform.tfvars.example terraform.tfvars
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Cloudflare ───────────────────────────────────────────────────────────────
+# Source: ~/Projects/minecraft/docs/runbook-cloudflare.md (account, grocky.net
+# zone, and API token bootstrap). The zone/account IDs match the minecraft
+# repo's terraform.tfvars. The token needs:
+#   Account → Cloudflare Pages: Edit
+#   Zone    → DNS: Edit (grocky.net)
+cloudflare_api_token  = "your-cloudflare-api-token"        # SECRET
+cloudflare_account_id = "0123456789abcdef0123456789abcdef" # account ID
+cloudflare_zone_id    = "0123456789abcdef0123456789abcdef" # zone ID for grocky.net
