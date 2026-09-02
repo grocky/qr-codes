@@ -42,6 +42,18 @@ const (
 	defaultSubtitle        = "SCAN TO CONNECT"
 )
 
+const (
+	maxLogoBytes     = 2 << 20 // 2 MiB decoded
+	maxHeadlineRunes = 24
+	maxSubtitleRunes = 40
+	maxFooterRunes   = 120
+)
+
+var (
+	hexColorRe    = regexp.MustCompile(`^#[0-9a-fA-F]{6}$`)
+	logoDataURIRe = regexp.MustCompile(`^data:image/(png|jpeg|svg\+xml);base64,`)
+)
+
 // ApplyDefaults fills empty appearance and text fields with the template's
 // original values. Credentials are never defaulted.
 func (p *Params) ApplyDefaults() {
@@ -111,15 +123,3 @@ func (p *Params) Validate() []FieldError {
 
 	return errs
 }
-
-const (
-	maxLogoBytes     = 2 << 20 // 2 MiB decoded
-	maxHeadlineRunes = 24
-	maxSubtitleRunes = 40
-	maxFooterRunes   = 120
-)
-
-var (
-	hexColorRe    = regexp.MustCompile(`^#[0-9a-fA-F]{6}$`)
-	logoDataURIRe = regexp.MustCompile(`^data:image/(png|jpeg|svg\+xml);base64,`)
-)

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="8.5in" height="11in" viewBox="0 0 850 1100" role="img"
+     aria-label="Scan the QR code to join the Wi-Fi">
+
+  <title>Wi-Fi Sign</title>
+
+  <defs>
+    <radialGradient id="felt" cx="50%" cy="36%" r="80%">
+      <stop offset="0%"   stop-color="#1b6f4c"/>
+      <stop offset="100%" stop-color="#0d3726"/>
+    </radialGradient>
+
+    <filter id="cardShadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+
+    <!-- card-suit ornament, drawn once and reused -->
+    <g id="suit-row" fill="#e8e2d4">
+      <path transform="translate(-51,0) scale(0.85)"
+            d="M0 -11 C 5 -4, 11 -2.5, 11 2.5 C 11 7.5, 6.5 10.5, 3 8 L 4.5 12 L -4.5 12 L -3 8 C -6.5 10.5, -11 7.5, -11 2.5 C -11 -2.5, -5 -4, 0 -11 Z"/>
+      <path transform="translate(-17,0) scale(0.85)"
+            d="M0 12 C -3 6, -11 2, -11 -4 C -11 -9, -6.5 -12, -3 -9.5 C -1.5 -8.5, -0.5 -7, 0 -5.5 C 0.5 -7, 1.5 -8.5, 3 -9.5 C 6.5 -12, 11 -9, 11 -4 C 11 2, 3 6, 0 12 Z"/>
+      <path transform="translate(17,0) scale(0.85)"
+            d="M0 -12 L 9 0 L 0 12 L -9 0 Z"/>
+      <path transform="translate(51,0) scale(0.85)"
+            d="M-4.5 12 L 4.5 12 L 2.5 4 C 5.5 7, 11 5.5, 11 0.5 C 11 -3.5, 7 -5.5, 3.5 -4 C 5 -7, 3.5 -11, 0 -11 C -3.5 -11, -5 -7, -3.5 -4 C -7 -5.5, -11 -3.5, -11 0.5 C -11 5.5, -5.5 7, -2.5 4 Z"/>
+    </g>
+  </defs>
+
+  <!-- ========= background ========= -->
+  <rect width="850" height="1100" fill="url(#felt)"/>
+  <rect x="26" y="26" width="798" height="1048" rx="20"
+        fill="none" stroke="#e8e2d4" stroke-opacity="0.55" stroke-width="2.5"/>
+  <rect x="37" y="37" width="776" height="1026" rx="14"
+        fill="none" stroke="#e8e2d4" stroke-opacity="0.2" stroke-width="1"/>
+
+  <!-- ========= headline ========= -->
+  <text x="425" y="466" text-anchor="middle"
+        font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="94" font-weight="700" letter-spacing="4" fill="#ffffff">WI-FI</text>
+
+  <line x1="305" y1="497" x2="545" y2="497"
+        stroke="#e8e2d4" stroke-opacity="0.45" stroke-width="1.5"/>
+
+  <text x="425" y="537" text-anchor="middle"
+        font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="26" font-weight="600" letter-spacing="9" fill="#e8e2d4">SCAN TO CONNECT</text>
+
+  <!-- ========= QR card ========= -->
+  <rect x="215" y="572" width="420" height="420" rx="16" fill="#ffffff" filter="url(#cardShadow)"/>
+
+  <!-- The white card provides the 38-unit quiet zone that keeps the code scannable. -->
+  <g transform="translate(253,610) scale(11.8621)" shape-rendering="crispEdges">
+    <path fill="#000000" d="M0 0h7v1h-7zM8 0h2v1h-2zM11 0h1v1h-1zM13 0h2v1h-2zM17 0h1v1h-1zM19 0h2v1h-2zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h2v1h-2zM12 1h2v1h-2zM20 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h2v1h-2zM11 2h1v1h-1zM13 2h5v1h-5zM19 2h1v1h-1zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h3v1h-3zM12 3h2v1h-2zM15 3h1v1h-1zM17 3h2v1h-2zM20 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM9 4h5v1h-5zM16 4h2v1h-2zM20 4h1v1h-1zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM10 5h2v1h-2zM13 5h5v1h-5zM19 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM8 7h1v1h-1zM11 7h4v1h-4zM16 7h3v1h-3zM1 8h1v1h-1zM3 8h1v1h-1zM5 8h4v1h-4zM10 8h1v1h-1zM12 8h2v1h-2zM15 8h4v1h-4zM20 8h4v1h-4zM25 8h2v1h-2zM28 8h1v1h-1zM1 9h3v1h-3zM7 9h1v1h-1zM9 9h2v1h-2zM17 9h1v1h-1zM21 9h2v1h-2zM25 9h3v1h-3zM0 10h3v1h-3zM6 10h1v1h-1zM8 10h1v1h-1zM10 10h1v1h-1zM13 10h1v1h-1zM15 10h7v1h-7zM23 10h1v1h-1zM27 10h1v1h-1zM0 11h1v1h-1zM2 11h2v1h-2zM5 11h1v1h-1zM9 11h3v1h-3zM18 11h2v1h-2zM21 11h1v1h-1zM26 11h1v1h-1zM28 11h1v1h-1zM0 12h2v1h-2zM4 12h3v1h-3zM8 12h2v1h-2zM12 12h4v1h-4zM17 12h2v1h-2zM20 12h1v1h-1zM22 12h7v1h-7zM0 13h1v1h-1zM4 13h2v1h-2zM8 13h1v1h-1zM10 13h1v1h-1zM12 13h1v1h-1zM18 13h1v1h-1zM20 13h1v1h-1zM26 13h1v1h-1zM0 14h2v1h-2zM6 14h2v1h-2zM11 14h2v1h-2zM15 14h2v1h-2zM22 14h2v1h-2zM25 14h1v1h-1zM28 14h1v1h-1zM0 15h2v1h-2zM3 15h2v1h-2zM7 15h1v1h-1zM13 15h1v1h-1zM15 15h2v1h-2zM19 15h1v1h-1zM22 15h3v1h-3zM1 16h1v1h-1zM3 16h6v1h-6zM13 16h4v1h-4zM19 16h1v1h-1zM21 16h1v1h-1zM23 16h1v1h-1zM25 16h3v1h-3zM1 17h1v1h-1zM3 17h1v1h-1zM5 17h1v1h-1zM7 17h3v1h-3zM14 17h2v1h-2zM17 17h1v1h-1zM22 17h1v1h-1zM25 17h2v1h-2zM0 18h1v1h-1zM3 18h1v1h-1zM5 18h2v1h-2zM8 18h1v1h-1zM10 18h2v1h-2zM17 18h2v1h-2zM23 18h1v1h-1zM26 18h3v1h-3zM4 19h2v1h-2zM8 19h1v1h-1zM10 19h1v1h-1zM13 19h5v1h-5zM20 19h2v1h-2zM23 19h1v1h-1zM27 19h2v1h-2zM0 20h1v1h-1zM3 20h4v1h-4zM9 20h5v1h-5zM16 20h1v1h-1zM20 20h8v1h-8zM8 21h1v1h-1zM10 21h1v1h-1zM13 21h1v1h-1zM16 21h2v1h-2zM20 21h1v1h-1zM24 21h1v1h-1zM27 21h2v1h-2zM0 22h7v1h-7zM8 22h1v1h-1zM10 22h5v1h-5zM16 22h1v1h-1zM18 22h3v1h-3zM22 22h1v1h-1zM24 22h2v1h-2zM27 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h2v1h-2zM12 23h1v1h-1zM16 23h1v1h-1zM18 23h1v1h-1zM20 23h1v1h-1zM24 23h1v1h-1zM26 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM9 24h3v1h-3zM13 24h1v1h-1zM15 24h2v1h-2zM18 24h1v1h-1zM20 24h5v1h-5zM26 24h2v1h-2zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h3v1h-3zM12 25h1v1h-1zM15 25h1v1h-1zM18 25h3v1h-3zM22 25h1v1h-1zM24 25h1v1h-1zM26 25h1v1h-1zM28 25h1v1h-1zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM9 26h1v1h-1zM11 26h1v1h-1zM14 26h6v1h-6zM21 26h4v1h-4zM26 26h1v1h-1zM28 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h3v1h-3zM12 27h3v1h-3zM16 27h2v1h-2zM19 27h3v1h-3zM27 27h1v1h-1zM0 28h7v1h-7zM10 28h1v1h-1zM12 28h1v1h-1zM14 28h2v1h-2zM17 28h1v1h-1zM20 28h1v1h-1zM22 28h1v1h-1zM27 28h1v1h-1z"/>
+  </g>
+
+  <!-- ========= footer ========= -->
+  <use xlink:href="#suit-row" transform="translate(425,1006)" opacity="0.65"/>
+
+  <text x="425" y="1046" text-anchor="middle"
+        font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="20" letter-spacing="0.5" fill="#e8e2d4" fill-opacity="0.9">Point your camera at the code — no typing required.</text>
+</svg>

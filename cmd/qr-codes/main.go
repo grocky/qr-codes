@@ -22,6 +22,8 @@ func main() {
 		err = runEncode(os.Args[2:])
 	case "decode":
 		err = runDecode(os.Args[2:])
+	case "sign":
+		err = runSign(os.Args[2:])
 	case "help", "-h", "-help", "--help":
 		usage()
 		return
@@ -42,6 +44,7 @@ func usage() {
 commands:
   encode  generate a QR code image:      qr-codes encode <type> [flags]
   decode  read QR codes from images:     qr-codes decode <image>...
+  sign    generate a Wi-Fi sign SVG:     qr-codes sign -ssid <ssid> [flags]
 
 run "qr-codes <command> -h" for details.
 `)

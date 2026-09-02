@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="8.5in" height="11in" viewBox="0 0 850 1100" role="img"
+     aria-label="Scan the QR code to join the Wi-Fi">
+
+  <title>Wi-Fi Sign</title>
+
+  <defs>
+    <radialGradient id="felt" cx="50%" cy="36%" r="80%">
+      <stop offset="0%"   stop-color="{{.FeltInner}}"/>
+      <stop offset="100%" stop-color="{{.FeltOuter}}"/>
+    </radialGradient>
+
+    <filter id="cardShadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="7" stdDeviation="11" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+{{if .ShowSuits}}
+    <!-- card-suit ornament, drawn once and reused -->
+    <g id="suit-row" fill="{{.Accent}}">
+      <path transform="translate(-51,0) scale(0.85)"
+            d="M0 -11 C 5 -4, 11 -2.5, 11 2.5 C 11 7.5, 6.5 10.5, 3 8 L 4.5 12 L -4.5 12 L -3 8 C -6.5 10.5, -11 7.5, -11 2.5 C -11 -2.5, -5 -4, 0 -11 Z"/>
+      <path transform="translate(-17,0) scale(0.85)"
+            d="M0 12 C -3 6, -11 2, -11 -4 C -11 -9, -6.5 -12, -3 -9.5 C -1.5 -8.5, -0.5 -7, 0 -5.5 C 0.5 -7, 1.5 -8.5, 3 -9.5 C 6.5 -12, 11 -9, 11 -4 C 11 2, 3 6, 0 12 Z"/>
+      <path transform="translate(17,0) scale(0.85)"
+            d="M0 -12 L 9 0 L 0 12 L -9 0 Z"/>
+      <path transform="translate(51,0) scale(0.85)"
+            d="M-4.5 12 L 4.5 12 L 2.5 4 C 5.5 7, 11 5.5, 11 0.5 C 11 -3.5, 7 -5.5, 3.5 -4 C 5 -7, 3.5 -11, 0 -11 C -3.5 -11, -5 -7, -3.5 -4 C -7 -5.5, -11 -3.5, -11 0.5 C -11 5.5, -5.5 7, -2.5 4 Z"/>
+    </g>
+{{end}}  </defs>
+
+  <!-- ========= background ========= -->
+  <rect width="850" height="1100" fill="url(#felt)"/>
+  <rect x="26" y="26" width="798" height="1048" rx="20"
+        fill="none" stroke="{{.Accent}}" stroke-opacity="0.55" stroke-width="2.5"/>
+  <rect x="37" y="37" width="776" height="1026" rx="14"
+        fill="none" stroke="{{.Accent}}" stroke-opacity="0.2" stroke-width="1"/>
+{{if .LogoDataURI}}
+  <!-- ========= logo ========= -->
+  <image id="logo" x="275" y="72" width="300" height="300"
+         preserveAspectRatio="xMidYMid meet"
+         xlink:href="{{.LogoDataURI}}"/>
+{{end}}
+  <!-- ========= headline ========= -->
+  <text x="425" y="466" text-anchor="middle"
+        font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="{{.HeadlineSize}}" font-weight="700" letter-spacing="4" fill="#ffffff"{{.HeadlineFit}}>{{.Headline}}</text>
+
+  <line x1="305" y1="497" x2="545" y2="497"
+        stroke="{{.Accent}}" stroke-opacity="0.45" stroke-width="1.5"/>
+
+  <text x="425" y="537" text-anchor="middle"
+        font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="{{.SubtitleSize}}" font-weight="600" letter-spacing="9" fill="{{.Accent}}"{{.SubtitleFit}}>{{.Subtitle}}</text>
+
+  <!-- ========= QR card ========= -->
+  <rect x="215" y="572" width="420" height="420" rx="16" fill="#ffffff" filter="url(#cardShadow)"/>
+
+  <!-- The white card provides the 38-unit quiet zone that keeps the code scannable. -->
+  <g transform="translate(253,610) scale({{.QRScale}})" shape-rendering="crispEdges">
+    <path fill="#000000" d="{{.QRPath}}"/>
+  </g>
+{{if .ShowSuits}}
+  <!-- ========= footer ========= -->
+  <use xlink:href="#suit-row" transform="translate(425,1006)" opacity="0.65"/>
+{{end}}{{if .FooterText}}
+  <text x="425" y="1046" text-anchor="middle"
+        font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="{{.FooterSize}}" letter-spacing="0.5" fill="{{.Accent}}" fill-opacity="0.9"{{.FooterFit}}>{{.FooterText}}</text>
+{{end}}</svg>
