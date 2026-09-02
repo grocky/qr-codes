@@ -1,0 +1,4 @@
+# Copy to terraform.tfvars and fill in. The account ID is not a secret
+# (it appears in dashboard URLs): dash.cloudflare.com -> any zone ->
+# Overview sidebar, or `npx wrangler whoami`.
+cloudflare_account_id = "00000000000000000000000000000000"

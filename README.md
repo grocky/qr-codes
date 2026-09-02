@@ -17,6 +17,21 @@ make e2e         # Playwright smoke tests (needs: cd web/e2e && npm install)
 make deploy      # wrangler pages deploy web (Cloudflare Pages)
 ```
 
+### Infrastructure
+
+`infrastructure/` manages the Cloudflare Pages project and the
+`wifi-signs.grocky.net` CNAME (written into the Route53 `grocky.net` zone,
+which is owned by the ddns-service repo). State lives in
+`s3://grocky-tfstate/wifi-signs.grocky.net/terraform.tfstate` with S3-native
+locking.
+
+```sh
+cp infrastructure/terraform.tfvars.example infrastructure/terraform.tfvars  # set account id
+export CLOUDFLARE_API_TOKEN=...   # needs "Cloudflare Pages: Edit"
+make tf-init tf-plan tf-apply     # AWS credentials required for state + Route53
+make deploy                       # then publish web/ to the Pages project
+```
+
 ## CLI
 
 ```sh
