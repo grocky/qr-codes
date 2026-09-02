@@ -21,12 +21,6 @@ provider "cloudflare" {
   api_token = var.cloudflare_api_token
 }
 
-# ====== Variables ======
-# The grocky.net zone is managed in Cloudflare (migrated from Route53; see
-# ~/Projects/minecraft/docs/runbook-cloudflare.md for the account, zone, and
-# API token bootstrap). Token needs: Account → Cloudflare Pages: Edit, and
-# Zone → DNS: Edit for grocky.net.
-
 variable "cloudflare_api_token" {
   type        = string
   description = "Cloudflare API token with Pages edit + DNS edit permissions."
