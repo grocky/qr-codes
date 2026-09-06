@@ -124,9 +124,9 @@ func TestRenderCustomization(t *testing.T) {
 			notContains: []string{"suit-row"},
 		},
 		{
-			name:     "ornament line is padded away from the QR card",
-			params:   `{` + base + `}`,
-			contains: []string{"translate(425,1018)"},
+			name:        "ornament line is padded away from the QR card",
+			params:      `{` + base + `}`,
+			contains:    []string{"translate(425,1018)"},
 			notContains: []string{"translate(425,1006)"},
 		},
 		{
@@ -139,6 +139,16 @@ func TestRenderCustomization(t *testing.T) {
 			params:      `{` + base + `,"accentColor":"#ff0000","backgroundColor":"#204060"}`,
 			contains:    []string{`stroke="#ff0000"`, `stop-color="#204060"`, `stop-color="#102030"`},
 			notContains: []string{"#e8e2d4", "#1b6f4c"},
+		},
+		{
+			name:     "made-with mark is white on the default dark felt",
+			params:   `{` + base + `}`,
+			contains: []string{`fill="#ffffff" fill-opacity="0.85">Made with wifi-signs.grocky.net</text>`},
+		},
+		{
+			name:     "made-with mark is dark on a light background",
+			params:   `{` + base + `,"backgroundColor":"#ffffff"}`,
+			contains: []string{`fill="#1c1c1c" fill-opacity="0.85">Made with wifi-signs.grocky.net</text>`},
 		},
 		{
 			name:        "long headline shrinks font size",
@@ -164,6 +174,20 @@ func TestRenderCustomization(t *testing.T) {
 			}
 			assertWellFormedXML(t, res.SVG)
 		})
+	}
+}
+
+func TestMarkColor(t *testing.T) {
+	tests := map[string]string{
+		"#000000": "#ffffff", // black felt: white mark
+		"#0d3826": "#ffffff", // darkened default green
+		"#ffffff": "#1c1c1c", // white: dark mark
+		"#f4f1ea": "#1c1c1c", // cream
+	}
+	for bg, want := range tests {
+		if got := markColor(bg); got != want {
+			t.Errorf("markColor(%s) = %s, want %s", bg, got, want)
+		}
 	}
 }
 

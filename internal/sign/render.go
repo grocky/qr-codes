@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 	"text/template"
@@ -73,7 +74,7 @@ func buildResult(paramsJSON []byte) Result {
 	tagline := fitText(p.Tagline, 24, 2, 0.62, 700, 12)
 
 	data := struct {
-		Accent, FeltInner, FeltOuter                        string
+		Accent, FeltInner, FeltOuter, MarkColor             string
 		LogoDataURI                                         string
 		Ornament                                            string
 		Headline, Subtitle, FooterText, TaglineText         string
@@ -84,6 +85,7 @@ func buildResult(paramsJSON []byte) Result {
 		Accent:       p.AccentColor,
 		FeltInner:    p.BackgroundColor,
 		FeltOuter:    darken(p.BackgroundColor),
+		MarkColor:    markColor(darken(p.BackgroundColor)),
 		LogoDataURI:  escapeXML(p.LogoDataURI),
 		Ornament:     p.Ornament,
 		Headline:     escapeXML(p.Headline),
@@ -146,6 +148,34 @@ func darken(hex string) string {
 	v, _ := strconv.ParseUint(hex[1:], 16, 32)
 	r, g, b := (v>>16)&0xff/2, (v>>8)&0xff/2, v&0xff/2
 	return fmt.Sprintf("#%02x%02x%02x", r, g, b)
+}
+
+// markColor picks white or near-black for the "Made with" mark, whichever
+// has the higher WCAG contrast ratio against bg. The mark sits in the
+// bottom-right corner, on the gradient's outer (darkened) color.
+func markColor(bg string) string {
+	const dark, light = "#1c1c1c", "#ffffff"
+	l := relativeLuminance(bg)
+	contrastLight := (relativeLuminance(light) + 0.05) / (l + 0.05)
+	contrastDark := (l + 0.05) / (relativeLuminance(dark) + 0.05)
+	if contrastDark > contrastLight {
+		return dark
+	}
+	return light
+}
+
+// relativeLuminance is the WCAG 2.x relative luminance of a validated
+// #rrggbb color, in [0, 1].
+func relativeLuminance(hex string) float64 {
+	v, _ := strconv.ParseUint(hex[1:], 16, 32)
+	lin := func(c uint64) float64 {
+		s := float64(c) / 255
+		if s <= 0.03928 {
+			return s / 12.92
+		}
+		return math.Pow((s+0.055)/1.055, 2.4)
+	}
+	return 0.2126*lin((v>>16)&0xff) + 0.7152*lin((v>>8)&0xff) + 0.0722*lin(v&0xff)
 }
 
 func formatNum(f float64) string {
