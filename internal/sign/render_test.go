@@ -141,6 +141,16 @@ func TestRenderCustomization(t *testing.T) {
 			notContains: []string{"#e8e2d4", "#1b6f4c"},
 		},
 		{
+			name:     "headline is white on the default dark felt",
+			params:   `{` + base + `}`,
+			contains: []string{`fill="#ffffff">WI-FI</text>`},
+		},
+		{
+			name:     "headline is dark on a light background",
+			params:   `{` + base + `,"backgroundColor":"#f4f1ea"}`,
+			contains: []string{`fill="#1c1c1c">WI-FI</text>`},
+		},
+		{
 			name:     "made-with mark is white on the default dark felt",
 			params:   `{` + base + `}`,
 			contains: []string{`fill="#ffffff" fill-opacity="0.85">Made with wifi-signs.grocky.net</text>`},
@@ -177,7 +187,7 @@ func TestRenderCustomization(t *testing.T) {
 	}
 }
 
-func TestMarkColor(t *testing.T) {
+func TestContrastColor(t *testing.T) {
 	tests := map[string]string{
 		"#000000": "#ffffff", // black felt: white mark
 		"#0d3826": "#ffffff", // darkened default green
@@ -185,8 +195,8 @@ func TestMarkColor(t *testing.T) {
 		"#f4f1ea": "#1c1c1c", // cream
 	}
 	for bg, want := range tests {
-		if got := markColor(bg); got != want {
-			t.Errorf("markColor(%s) = %s, want %s", bg, got, want)
+		if got := contrastColor(bg); got != want {
+			t.Errorf("contrastColor(%s) = %s, want %s", bg, got, want)
 		}
 	}
 }

@@ -74,7 +74,8 @@ func buildResult(paramsJSON []byte) Result {
 	tagline := fitText(p.Tagline, 24, 2, 0.62, 700, 12)
 
 	data := struct {
-		Accent, FeltInner, FeltOuter, MarkColor             string
+		Accent, FeltInner, FeltOuter                        string
+		HeadlineColor, MarkColor                            string
 		LogoDataURI                                         string
 		Ornament                                            string
 		Headline, Subtitle, FooterText, TaglineText         string
@@ -82,26 +83,29 @@ func buildResult(paramsJSON []byte) Result {
 		HeadlineFit, SubtitleFit, FooterFit, TaglineFit     string
 		QRScale, QRPath                                     string
 	}{
-		Accent:       p.AccentColor,
-		FeltInner:    p.BackgroundColor,
-		FeltOuter:    darken(p.BackgroundColor),
-		MarkColor:    markColor(darken(p.BackgroundColor)),
-		LogoDataURI:  escapeXML(p.LogoDataURI),
-		Ornament:     p.Ornament,
-		Headline:     escapeXML(p.Headline),
-		Subtitle:     escapeXML(p.Subtitle),
-		FooterText:   escapeXML(p.FooterText),
-		TaglineText:  escapeXML(p.Tagline),
-		HeadlineSize: headline.size,
-		SubtitleSize: subtitle.size,
-		FooterSize:   footer.size,
-		TaglineSize:  tagline.size,
-		HeadlineFit:  headline.fit,
-		SubtitleFit:  subtitle.fit,
-		FooterFit:    footer.fit,
-		TaglineFit:   tagline.fit,
-		QRScale:      formatNum(qrBoxSize / float64(n)),
-		QRPath:       pathData(bitmap),
+		Accent:    p.AccentColor,
+		FeltInner: p.BackgroundColor,
+		FeltOuter: darken(p.BackgroundColor),
+		// The headline sits near the gradient's center (the raw background);
+		// the mark sits in the corner, on the darkened outer stop.
+		HeadlineColor: contrastColor(p.BackgroundColor),
+		MarkColor:     contrastColor(darken(p.BackgroundColor)),
+		LogoDataURI:   escapeXML(p.LogoDataURI),
+		Ornament:      p.Ornament,
+		Headline:      escapeXML(p.Headline),
+		Subtitle:      escapeXML(p.Subtitle),
+		FooterText:    escapeXML(p.FooterText),
+		TaglineText:   escapeXML(p.Tagline),
+		HeadlineSize:  headline.size,
+		SubtitleSize:  subtitle.size,
+		FooterSize:    footer.size,
+		TaglineSize:   tagline.size,
+		HeadlineFit:   headline.fit,
+		SubtitleFit:   subtitle.fit,
+		FooterFit:     footer.fit,
+		TaglineFit:    tagline.fit,
+		QRScale:       formatNum(qrBoxSize / float64(n)),
+		QRPath:        pathData(bitmap),
 	}
 
 	var b strings.Builder
@@ -150,10 +154,10 @@ func darken(hex string) string {
 	return fmt.Sprintf("#%02x%02x%02x", r, g, b)
 }
 
-// markColor picks white or near-black for the "Made with" mark, whichever
-// has the higher WCAG contrast ratio against bg. The mark sits in the
-// bottom-right corner, on the gradient's outer (darkened) color.
-func markColor(bg string) string {
+// contrastColor picks white or near-black, whichever has the higher WCAG
+// contrast ratio against bg. Used for text that isn't tied to the accent
+// color (the headline and the made-with mark).
+func contrastColor(bg string) string {
 	const dark, light = "#1c1c1c", "#ffffff"
 	l := relativeLuminance(bg)
 	contrastLight := (relativeLuminance(light) + 0.05) / (l + 0.05)
